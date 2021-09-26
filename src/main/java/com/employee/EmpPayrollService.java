@@ -48,6 +48,12 @@ public class EmpPayrollService {
 		System.out.println("\nWriting Employee Payroll to Console \n" + employeePayrollList);
 	}
 
+	/*
+	 * method to print employee detail to console from file
+	 */
+	public void printData() {
+		new EmpPayrollFileIO().printData();
+	}
 	public static void main(String[] args) {
 		ArrayList<EmpPayrollData> employeePayrollList = new ArrayList<>();
 		EmpPayrollService employeePayrollService = new EmpPayrollService(employeePayrollList);
