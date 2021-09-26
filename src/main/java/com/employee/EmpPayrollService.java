@@ -3,8 +3,11 @@ package com.employee;
 import java.util.*;
 
 public class EmpPayrollService {
+	public enum IOService {
+		CONSOLE_IO, FILE_IO, DB_IO, REST_IO
+	}
 
-	private List<EmpPayrollData> employeePayrollList;
+	public List<EmpPayrollData> employeePayrollList;
 
 	public EmpPayrollService() {
 		System.out.println("Welcome to Employee Payroll Service.");
@@ -15,8 +18,19 @@ public class EmpPayrollService {
 	}
 
 	/*
-	 * To read the employee id, name and salary amount
+	 * method to read employee detail from the user
 	 */
+	public void writeEmployeePayrollData(EmpPayrollService.IOService fileIo) {
+		if (fileIo.equals(IOService.CONSOLE_IO)) {
+			System.out.println("\n Writing Employee Payroll Roaster to Console\n" + employeePayrollList);
+		} else if (fileIo.equals(IOService.FILE_IO)) {
+			new EmpPayrollFileIO().writeData(employeePayrollList);
+		}
+	}
+	public long countEntries(IOService ioService)
+	{  
+        return new EmpPayrollFileIO().countEntries();
+    }
 	private void readEmployeePayrollData(Scanner consoleInputReader) {
 		System.out.println("Enter employee ID: ");
 		int id = consoleInputReader.nextInt();
@@ -28,18 +42,19 @@ public class EmpPayrollService {
 	}
 
 	/*
-	 * Printing the employee details like name,id and salary amount
+	 * method to print employee detail to the console
 	 */
-	private void writeEmpPayrollData(Scanner consoleInputReader) {
+	private void writeEmployeePayrollData(Scanner consoleInputReader) {
 		System.out.println("\nWriting Employee Payroll to Console \n" + employeePayrollList);
 	}
 
 	public static void main(String[] args) {
-		ArrayList<EmpPayrollData> employeePayrollList = new ArrayList<EmpPayrollData>();
+		ArrayList<EmpPayrollData> employeePayrollList = new ArrayList<>();
 		EmpPayrollService employeePayrollService = new EmpPayrollService(employeePayrollList);
 		Scanner consoleInputReader = new Scanner(System.in);
 		employeePayrollService.readEmployeePayrollData(consoleInputReader);
-		employeePayrollService.writeEmpPayrollData(consoleInputReader);
+		employeePayrollService.writeEmployeePayrollData(consoleInputReader);
+		employeePayrollService.writeEmployeePayrollData(IOService.FILE_IO);
 		consoleInputReader.close();
 	}
 }
