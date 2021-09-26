@@ -10,7 +10,6 @@ public class FileAPItest {
 	private static String PLAY_WITH_NIO = "TempPlayGround";
 
 	@Test
-
 	public void givenPathWhenCheckedThenConfirm() throws IOException {
 		// Check File exists
 		Path homePath = Paths.get(HOME);
@@ -38,5 +37,12 @@ public class FileAPItest {
 		// listing of files
 		Files.list(playPath).filter(Files::isRegularFile).forEach(System.out::println);
 
+	}
+
+	@Test
+	public void givenADirectoryWhenWatchedListsAllTheActivities() throws IOException {
+		Path dir = Paths.get(HOME + "/" + PLAY_WITH_NIO);
+		Files.list(dir).filter(Files::isRegularFile).forEach(System.out::println);
+		new EmpWatch(dir).processEvents();
 	}
 }
