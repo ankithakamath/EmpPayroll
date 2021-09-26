@@ -35,4 +35,14 @@ public class EmpPayrollFileIO {
 		}
 		return entries;
 	}
+	/*
+	 * to print payroll entries from file
+	 */
+	public void printData() {
+		try {
+			Files.lines(new File(PAYROLL_FILE_NAME).toPath()).forEach(System.out::println);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
