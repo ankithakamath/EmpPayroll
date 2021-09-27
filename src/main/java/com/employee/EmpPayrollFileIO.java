@@ -1,8 +1,10 @@
 package com.employee;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmpPayrollFileIO {
@@ -11,11 +13,11 @@ public class EmpPayrollFileIO {
 	/**
 	 * method to Write Employee Payroll to a File
 	 */
-	public void writeData(List<EmpPayrollData> empPayrollList) {
+	public void writeData(List<EmpPayrollData> employeePayrollList) {
 		StringBuffer empBuffer = new StringBuffer();
-		empPayrollList.forEach(emp -> {
-			String empDataString = emp.toString().concat("\n");
-			empBuffer.append(empDataString);
+		employeePayrollList.forEach(employee -> {
+			String employeeDataString = employee.toString().concat("\n");
+			empBuffer.append(employeeDataString);
 		});
 		try {
 			Files.write(Paths.get(PAYROLL_FILE_NAME), empBuffer.toString().getBytes());
@@ -23,9 +25,10 @@ public class EmpPayrollFileIO {
 			e.printStackTrace();
 		}
 	}
-   /*
-    * Employee Payroll to get count
-    */
+
+	/*
+	 * to get count of entries of employee payroll
+	 */
 	public long countEntries() {
 		long entries = 0;
 		try {
@@ -35,6 +38,7 @@ public class EmpPayrollFileIO {
 		}
 		return entries;
 	}
+
 	/*
 	 * to print payroll entries from file
 	 */
@@ -44,5 +48,21 @@ public class EmpPayrollFileIO {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/*
+	 * method to read employee payroll data from file
+	 */
+	public List<EmpPayrollData> readData() {
+		List<EmpPayrollData> employeePayrollList = new ArrayList<>();
+		try {
+			Files.lines((new File(PAYROLL_FILE_NAME).toPath())).map(line -> line.trim()).forEach(line -> {
+				String[] s = line.split(",");
+				employeePayrollList.add(new EmpPayrollData(s[0], Integer.parseInt(s[1]), Double.parseDouble(s[2])));
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return employeePayrollList;
 	}
 }
