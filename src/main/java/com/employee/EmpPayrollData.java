@@ -7,14 +7,14 @@ public class EmpPayrollData {
 	private double salary;
 
 	public EmpPayrollData(String name, int id, double salary) {
-		this.id = id;
 		this.name = name;
+		this.id = id;
 		this.salary = salary;
 	}
 
 	@Override
 	public String toString() {
-		return "id:" + id + " name:" + name + " salary:" + salary;
+		return  " name:" + name +"id:" + id + " salary:" + salary;
 	}
 
 }
